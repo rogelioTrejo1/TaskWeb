@@ -1,0 +1,308 @@
+//Environment variables
+require('dotenv').config();
+
+//Dependeses
+import { Request, Response } from "express";
+import { getRepository, UpdateResult, DeleteResult } from "typeorm";
+import { Task } from "../models/Task";
+
+/**
+ * Send to client all tasks that there are in the database
+ * @param req Request Object from Express
+ * @param res Responce Object from Express 
+ */
+export const getTasks = async (req: Request, res: Response): Promise<void> => {
+    //Instances
+    let information: IInformatiton = {};
+    let status: number;
+
+    try {
+        //Get all tasks in ther database
+        const tasks: Task[] = await getRepository(Task).find();
+        information = {
+            status: status = 200,
+            message: "Data successfully completed!",
+            resp: true,
+            body: tasks
+        }
+    } catch (error) {
+        //Set the error information to client
+        information = {
+            status: status = 400,
+            message: "There is an error!!!",
+            resp: false,
+            error: process.env.NODE_ENV === 'develoment' ? error : null
+        }
+
+        //Print Error
+        console.log(error);
+    }
+
+    //Send the response to client
+    res.status(status).json(information);
+};
+
+/**
+ * Send only a one task that there is in the database
+ * @param req Request Object from Express
+ * @param res Responce Object from Express 
+ */
+export const getTask = async (req: Request, res: Response): Promise<void> => {
+    //Instances
+    let information: IInformatiton = {};
+    let status: number;
+
+    try {
+        const Id: string = req.params.Id;
+        const task: Task | undefined = await getRepository(Task).findOne(Id);
+
+        if (task)
+            information = {
+                status: status = 200,
+                message: "Data successfully consulted!!!!",
+                resp: true,
+                body: task
+            };
+        else
+            information = {
+                status: status = 404,
+                message: "Taks not found!",
+                resp: false,
+            };
+
+    } catch (error) {
+        //Set the error information to client
+        information = {
+            status: status = 400,
+            message: "There is an error!!!",
+            resp: false,
+            error: process.env.NODE_ENV === 'develoment' ? error : null
+        }
+
+        //Print Error
+        console.log(error);
+
+        //Send the responce to client
+        res.status(status).json(information);
+    }
+
+    res.status(status).json(information);
+};
+
+/**
+ * Create a new tasks in the database
+ * @param req Request Object from Express
+ * @param res Responce Object from Express
+ */
+export const postTask = async (req: Request, res: Response): Promise<void> => {
+    //Instances
+    let information: IInformatiton = {};
+    let status: number;
+
+    try {
+        const { task, delivery_Date, description }: Task = req.body;
+        const newTask = await getRepository(Task).save({ task, delivery_Date, description });
+
+        //Set the information to client
+        information = {
+            status: status = 200,
+            message: "Successfully created data!!!",
+            resp: true,
+            body: newTask,
+        }
+    } catch (error) {
+        //Set the error information to client
+        information = {
+            status: status = 400,
+            message: "There is an error!!!",
+            resp: false,
+            error: process.env.NODE_ENV === 'develoment' ? error : null
+        }
+
+        //Print Error
+        console.log(error);
+    }
+
+    //Send the responce to client
+    res.status(status).json(information);
+};
+
+/**
+ * Update a task in the database
+ * @param req Request Object from Express
+ * @param res Responce Object from Express 
+ */
+export const putTask = async (req: Request, res: Response): Promise<void> => {
+    //Instances
+    let information: IInformatiton = {};
+    let status: number;
+
+    try {
+        const { Id, task, delivery_Date, description }: Task = req.body;
+        const oldTask: Task | undefined = await getRepository(Task).findOne(Id);
+        if (oldTask) {
+            const putTask: UpdateResult = await getRepository(Task).update(oldTask, { task, delivery_Date, description });
+            information = {
+                status: status = 200,
+                message: "Successfully updated data!!!!!",
+                resp: true,
+                body: putTask
+            }
+        } else {
+            information = {
+                status: status = 400,
+                message: "Error, no user exists",
+                resp: false
+            }
+        }
+
+    } catch (error) {
+        //Set the error information to client
+        information = {
+            status: status = 400,
+            message: "There is an error!!!",
+            resp: false,
+            error: process.env.NODE_ENV === 'develoment' ? error : null
+        }
+
+        //Print Error
+        console.log(error);
+    }
+
+    //Send the responce to client
+    res.status(status).json(information);
+};
+
+/**
+ * Delete a task in the database
+ * @param req Request Object from Express
+ * @param res Responce Object from Express 
+ */
+export const deleteTask = async (req: Request, res: Response): Promise<void> => {
+    //Instances
+    let information: IInformatiton = {};
+    let status: number;
+
+    try {
+        const Id: string = req.params.Id
+        const deleteTask: DeleteResult = await getRepository(Task).delete(Id);
+
+        information = {
+            status: status = 200,
+            message: "Successfully deleted data!!!!!",
+            resp: true,
+            body: deleteTask
+        }
+    } catch (error) {
+        //Set the error information to client
+        information = {
+            status: status = 400,
+            message: "There is an error!!!",
+            resp: false,
+            error: process.env.NODE_ENV === 'develoment' ? error : null
+        }
+
+        //Print Error
+        console.log(error);
+    }
+
+    //Send the responce to client
+    res.status(status).json(information);
+};
+
+/**
+ * Search a task in the database with a name of it
+ * @param req Request Object from Express
+ * @param res Responce Object from Express 
+ */
+export const searchTask = async (req: Request, res: Response): Promise<void> => {
+    //Instances
+    let information: IInformatiton = {};
+    let status: number;
+
+    try {
+        const task: string = req.params.task;
+        const searchTask: Task = await getRepository(Task)
+            .query('SELECT * FROM task WHERE task LIKE ?', [`%${task}%`]);
+
+        information = {
+            status: status = 200,
+            message: "Data succesfuly searched!!!",
+            resp: true,
+            body: searchTask
+        };
+
+
+    } catch (error) {
+        //Set the error information to client
+        information = {
+            status: status = 400,
+            message: "There is an error!!!",
+            resp: false,
+            error: process.env.NODE_ENV === 'develoment' ? error : null
+        }
+
+        //Print Error
+        console.log(error);
+    }
+
+    //Send the responce to client
+    res.status(status).json(information);
+};
+
+/**
+ * Update the state of the task in ther database
+ * @param req Request Object from Express
+ * @param res Responce Object from Express
+ */
+export const putDone = async (req: Request, res: Response): Promise<void> => {
+    //Instances
+    let information: IInformatiton = {};
+    let status: number;
+
+    try {
+        const { Id, done }: Task = req.body;
+        const task: Task | undefined = await getRepository(Task).findOne({ Id });
+
+        if (task) {
+            const putDone: UpdateResult = await getRepository(Task).update(task, { done });
+
+            information = {
+                status: status = 200,
+                message: "Data succesfuly updated!!!",
+                resp: true,
+                body: putDone
+            };
+        } else {
+            information = {
+                status: status = 400,
+                message: "Task not exist!!!",
+                resp: false
+            };
+        }
+
+    } catch (error) {
+        //Set the error information to client
+        information = {
+            status: status = 400,
+            message: "There is an error!!!",
+            resp: false,
+            error: process.env.NODE_ENV === 'develoment' ? error : null
+        }
+
+        //Print Error
+        console.log(error);
+    }
+
+    //Send the responce to client
+    res.status(status).json(information);
+};
+
+//Interface
+interface IInformatiton {
+    status?: number;
+    resp?: boolean;
+    message?: string;
+    body?: Task | Task[] | UpdateResult | DeleteResult;
+    error?: Error | null;
+}
