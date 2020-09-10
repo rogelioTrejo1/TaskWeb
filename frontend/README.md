@@ -1,4 +1,4 @@
-# Webpack-App-Type
+# taskweb-app
 Creación de una aplicación Web con Webpack, estableciendo toda la configuración básica para poder facilitar la creación de esta misma ocupando typescript como lenguaje.
 
 ## Comandos

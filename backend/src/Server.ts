@@ -1,12 +1,12 @@
-//Environment variables
+//Variables de Entorno
 require('dotenv').config();
 
-//Dependenses
+//Dependencias
 import express, { Application, json, urlencoded } from "express";
 import morgan from "morgan";
 import cors from "cors";
 
-//Routes
+//Rutas
 import routes from "./routes/routes";
 import apiRoutes from "./routes/api.routes";
 
@@ -21,22 +21,22 @@ class Server {
     }
 
     /**
-     * Return the application of the server
+     * Retorna la aplicacion del servidor
      */
     public get App(): Application {
         return this.app;
     }
 
     /**
-     * Set all the settings of the server
-     * @param {number} port port of the server on which you will be working
+     * Establece todas las configuraciones del servidor
+     * @param {number} port puerto del servidor en el que que trabaje
      */
     private settings(port?: number): void {
         this.app.set('port', port || process.env.PORT || 3500);
     }
 
     /**
-     * Set all middelwares that use on the server
+     * Establece todos los middlewares que se ocuparan el el servidor
      */
     private middlewares(): void {
         this.app.use(cors());
@@ -44,20 +44,23 @@ class Server {
         this.app.use(urlencoded({extended: false}));
 
         /**
-         * If the eviroment is same to "Develoment", we use a lib "Morgar" to check the requests of
-         * the client, else we do not use "Morgan"
+         * Si el entorno es igual a "develoment", se usara la liberia de morgan para
+         * revisar todas las peticiones del cliente, de lo contrario no sera nesesario su uso.
          */
         if (process.env.NODE_ENV === 'develoment')
             this.app.use(morgan('dev'));
     }
 
+    /**
+     * Establese las rutas del servidor
+     */
     private routes(): void {
         this.app.use(routes);
         this.app.use('/api', apiRoutes);
     }
 
     /**
-     * Start the server
+     * Arranca el server el el puerto establecido
      */
     public startServer(): void {
         this.app.listen(this.app.get('port'), () => {
@@ -67,5 +70,5 @@ class Server {
     
 }
 
-//Export the module
+//Exportación del modulo
 export default Server;

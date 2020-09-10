@@ -1,15 +1,15 @@
-//Dependenses
+//Dependencias
 import { Router } from "express";
 
-//Inicialitation
+//Inicializaciones
 const router: Router = Router();
 
-//Principal routes
+//Ruta principal
 router.get('/', (req, res): void => {
     res.json({
         "message": "Welcome to my api!"
     })
 });
 
-//Export module
+//Exportación del modulo 
 export default router;

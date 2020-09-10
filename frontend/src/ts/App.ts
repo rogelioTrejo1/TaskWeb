@@ -97,10 +97,10 @@ taskBodySeccion.addEventListener('change', async (e: Event) => {
         //Genero la tarea a actualizar
         const task: Task = {
             Id: target.getAttribute('id') as string,
-            done:  target.value === "true" ? "false" :  "true"
+            done: target.value == "1" ? 0 : 1
         };
-        
-        //Actualizo la tarea y valido el comportamiento
+ 
+        // Actualizo la tarea y valido el comportamiento
         const { resp }: ApiResponce = await api.putDone(task);
         if (resp)
             validTasks();
@@ -116,11 +116,12 @@ modalSeccion.addEventListener('click', async (e: Event) => {
         //Genero la tarea a actualizar
         const task: Task = {
             Id: target.getAttribute('_id') as string,
-            done:  target.value === "true" ? "false" :  "true"
+            done: target.value == "1" ? 0 : 1
         };
-        
-        //Actualizo la tarea y valido el comportamiento
+ 
+        // Actualizo la tarea y valido el comportamiento
         const { resp }: ApiResponce = await api.putDone(task);
+
         if (resp)
             validTasks();
        

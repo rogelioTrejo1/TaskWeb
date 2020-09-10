@@ -10,5 +10,3 @@ import "bootstrap/dist/js/bootstrap"
 
 //Aplicación
 import "./ts/App";
-
-console.log(process.env.NODE_ENV)

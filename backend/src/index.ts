@@ -1,19 +1,19 @@
-//Environment variables
+//Variables de entorno
 require('dotenv').config();
 
-//Dependenses
+//Dependencias
 import "reflect-metadata";
 import Server from "./Server";
 import connection from "./database/Connection";
 
 /**
- * Main function
+ * Función Principal
  */
 async function main(): Promise<void> {
     try {
         const server: Server = new Server();
 
-        //Services
+        //Servicios
         server.startServer();
         await connection();
 

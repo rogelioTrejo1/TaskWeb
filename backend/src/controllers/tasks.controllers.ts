@@ -1,15 +1,15 @@
-//Environment variables
+//Variables de entorno
 require('dotenv').config();
 
-//Dependeses
+//Dependencias
 import { Request, Response } from "express";
 import { getRepository, UpdateResult, DeleteResult } from "typeorm";
 import { Task } from "../models/Task";
 
 /**
- * Send to client all tasks that there are in the database
- * @param req Request Object from Express
- * @param res Responce Object from Express 
+ * Envia al cliente todas las tareas que se encuantran en la base de datos
+ * @param req Obejeto Request de Express
+ * @param res Objeto Response de Espress 
  */
 export const getTasks = async (req: Request, res: Response): Promise<void> => {
     //Instances
@@ -43,9 +43,9 @@ export const getTasks = async (req: Request, res: Response): Promise<void> => {
 };
 
 /**
- * Send only a one task that there is in the database
- * @param req Request Object from Express
- * @param res Responce Object from Express 
+ * Envia solo una tarea de la base de datos
+ * @param req Obejeto Request de Express
+ * @param res Objeto Response de Espress
  */
 export const getTask = async (req: Request, res: Response): Promise<void> => {
     //Instances
@@ -90,9 +90,9 @@ export const getTask = async (req: Request, res: Response): Promise<void> => {
 };
 
 /**
- * Create a new tasks in the database
- * @param req Request Object from Express
- * @param res Responce Object from Express
+ * Crea una nueva tarea en la base de datos
+ * @param req Obejeto Request de Express
+ * @param res Objeto Response de Espress
  */
 export const postTask = async (req: Request, res: Response): Promise<void> => {
     //Instances
@@ -128,9 +128,9 @@ export const postTask = async (req: Request, res: Response): Promise<void> => {
 };
 
 /**
- * Update a task in the database
- * @param req Request Object from Express
- * @param res Responce Object from Express 
+ * Actualiza una tarea en la base de datos
+ * @param req Obejeto Request de Express
+ * @param res Objeto Response de Espress
  */
 export const putTask = async (req: Request, res: Response): Promise<void> => {
     //Instances
@@ -174,9 +174,9 @@ export const putTask = async (req: Request, res: Response): Promise<void> => {
 };
 
 /**
- * Delete a task in the database
- * @param req Request Object from Express
- * @param res Responce Object from Express 
+ * Elimina una tarea de la base de datos
+ * @param req Obejeto Request de Express
+ * @param res Objeto Response de Espress
  */
 export const deleteTask = async (req: Request, res: Response): Promise<void> => {
     //Instances
@@ -211,7 +211,7 @@ export const deleteTask = async (req: Request, res: Response): Promise<void> => 
 };
 
 /**
- * Search a task in the database with a name of it
+ * Busca una tarea en la base de datos mediente su nombre
  * @param req Request Object from Express
  * @param res Responce Object from Express 
  */

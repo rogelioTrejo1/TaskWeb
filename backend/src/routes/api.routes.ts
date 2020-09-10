@@ -1,14 +1,13 @@
-//Dependeses 
+//Dependencias 
 import { Router } from "express";
 
-//Inicialization
+//Inicializaciones
 const router: Router = Router();
 
-//Controllers
+//Controladores
 import { getTasks, getTask, postTask, putTask, deleteTask, searchTask, putDone } from "../controllers/tasks.controllers";
-import notFound404 from "../middlewares/400notFound";
 
-//Controllers
+//Rutas de la API
 router.route('/task/:Id')
     .get(getTask)
     .delete(deleteTask);
@@ -19,13 +18,7 @@ router.route('/tasks')
     .put(putTask);
 
 router.get('/searchTask/:task', searchTask);
-router.put('/putTask', putDone);
+router.put('/putDone', putDone);
 
-router.route('*')
-    .get(notFound404)
-    .post(notFound404)
-    .put(notFound404)
-    .delete(notFound404);
-
-//Export module
+//Exportación del modulo
 export default router;

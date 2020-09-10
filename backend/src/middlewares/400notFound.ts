@@ -1,10 +1,10 @@
-//Dependeses
+//Dependencias
 import { Request, Response } from "express";
 
 /**
- * Handle of response 404 of the api
- * @param req Request Object from Express
- * @param res Responce Object from Express
+ * Manejador de peticiones erroneas (404) del API
+ * @param req Obejeto Request de Express
+ * @param res Objeto Response de Espress
  */
 const notFound404 = (req: Request, res: Response) => {
     res.status(404).json({
@@ -14,5 +14,5 @@ const notFound404 = (req: Request, res: Response) => {
     });
 };
 
-//Export Module
+//Exportacion del modulo
 export default notFound404;

@@ -3,7 +3,7 @@ class Api {
     private headers: Headers;
 
     constructor() {
-        this.URI = process.env.NODE_ENV as string == "development" ? "http://localhost:3000/api" : "http://api.taskweb.com"
+        this.URI = process.env.NODE_ENV as string == "development" ? "http://localhost:3000/api" : "http://api.taskweb.com/api"
         this.headers = new Headers({
             'Content-Type': 'application/json'
         });
@@ -128,7 +128,7 @@ export interface Task {
     task?: string;
     description?: string;
     delivery_Date?: Date | string;
-    done?: boolean | string;
+    done?: boolean | string | number;
 }
 
 export interface ApiResponce {

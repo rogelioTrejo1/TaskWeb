@@ -1,6 +1,6 @@
 //Dependencias
 import { Task } from "./API";
-import { format } from "timeago.js";
+import moment from "moment";
 
 class UI {
     /**
@@ -17,7 +17,7 @@ class UI {
                         </p>
                     </div>
                     <div class="card-body">
-                        <p>${task.done ? "<i><s>Delivered to: "+format(task.delivery_Date as Date) + "</s></i>": "Delivered to: "+format(task.delivery_Date as Date)}</p>
+                        <p>${task.done ? "<i><s>Delivered to: " + moment(task.delivery_Date).format('MMMM Do, h:mm:ss a')+ "</s></i>": "Delivered to: " + moment(task.delivery_Date).format('MMMM Do, h:mm:ss a')}</p>
                         <div class="custom-control custom-switch">
                             <input ${task.done ? "checked " : ""}  type="checkbox" class="custom-control-input doneInput" value="${task.done}" id="${task.Id}">
                             <label class="custom-control-label" for="${task.Id}">
@@ -69,6 +69,6 @@ class UI {
             </div>
         `;
     }
-}
+} 
 
 export default UI;

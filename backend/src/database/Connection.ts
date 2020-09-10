@@ -1,18 +1,20 @@
-//Environment variables
+//Variables de entorno
 require('dotenv').config();
 
-//Dependeses
+//Dependencias
 import { createConnection, ConnectionOptions, Connection } from "typeorm";
 
 /**
- * Create a new connection with a database
- * @param option: option connection
+ * Crea la connexión con la base de datos
+ * @param option optiones de conexión
  */
 const newConnection = async (option?: ConnectionOptions): Promise<void> => {
-    //Local Variables
+    //Variables local
     let connection: Connection;
     
     try {
+
+        //Se valida si exiten opciones del usuario o se ocuparan por las variables de entorno
         if (option)
             connection = await createConnection(option);
         else
@@ -23,9 +25,10 @@ const newConnection = async (option?: ConnectionOptions): Promise<void> => {
                 synchronize: true
             });
 
-        //I validaed the connection
+        //Se valida si exixte una conexión a la base de datos
         if (connection) 
             console.log(">>>BD is connected!");
+
     } catch (error) {
         console.log(error);
     }
