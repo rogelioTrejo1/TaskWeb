@@ -89,45 +89,14 @@ const webpackConfig: WebpackConfig = {
             },
             //Lectura de los archivos media (jpg, png, gif o jpeg)
             {
-                test: /\.(ico|jpg|png|gif|jpeg|svg)$/,
-                use: [{
-                    loader: 'file-loader',
-                    options: {
-                        name: '[name].[ext]',
-                        outputPath: "static/",
-                        useRelativePath: true
-                    }
-                }]
-            },
-            /**
-             * Se establese una manera de optimizar las imagenes que se implementen en
-             * la aplicación.
-             * 
-             * Si sedesea cambiar los valores, se puede realizar siguiende la documentación
-             * en: https://www.npmjs.com/package/image-webpack-loader para una mejor optimización.
-             */
-            {
-                loader: 'image-webpack-loader',
+                test: /\.(gif|png|jpe?g|svg|ico)$/,
+                loader: 'file-loader',
                 options: {
-                    mozjpeg: {
-                        progressive: true,
-                        quality: 65
-                    },
-                    optipng: {
-                        enabled: false,
-                    },
-                    pngquant: {
-                        quality: [0.65, 0.90],
-                        speed: 4
-                    },
-                    gifsicle: {
-                        interlaced: false,
-                    },
-                    webp: {
-                        quality: 75
-                    }
+                    name: '[name].[ext]',
+                    outputPath: 'static/',
+                    useRelativePath: true,
                 }
-            }
+            }, 
         ]
     },
     /**
@@ -165,7 +134,7 @@ const webpackConfig: WebpackConfig = {
             systemvars: true, // load all the predefined 'process.env' variables which will trump anything local per dotenv specs.
             silent: true, // hide any errors
             defaults: false // load '.env.defaults' as the default values if empty.
-          }),
+        }),
     ],
     /**
      * Se establesen las configuraciones de un servidor de desarrollo para una
