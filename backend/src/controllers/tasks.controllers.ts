@@ -18,7 +18,12 @@ export const getTasks = async (req: Request, res: Response): Promise<void> => {
 
     try {
         //Get all tasks in ther database
-        const tasks: Task[] = await getRepository(Task).find();
+        const tasks: Task[] = await getRepository(Task).find({
+            order: {
+                Id: "DESC"
+            }
+        });
+
         information = {
             status: status = 200,
             message: "Data successfully completed!",
@@ -101,14 +106,15 @@ export const postTask = async (req: Request, res: Response): Promise<void> => {
 
     try {
         const { task, delivery_Date, description }: Task = req.body;
-        const newTask = await getRepository(Task).save({ task, delivery_Date, description });
+        const valueDate: Date = new Date(delivery_Date);
+        const newTask = await getRepository(Task).save({ task, delivery_Date: valueDate, description });
 
         //Set the information to client
         information = {
             status: status = 200,
             message: "Successfully created data!!!",
             resp: true,
-            body: newTask,
+            body: newTask
         }
     } catch (error) {
         //Set the error information to client
