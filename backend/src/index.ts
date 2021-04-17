@@ -1,10 +1,7 @@
-//Variables de entorno
-require('dotenv').config();
-
 //Dependencias
 import "reflect-metadata";
 import Server from "./Server";
-import connection from "./database/Connection";
+import connection from "./database";
 
 /**
  * Función Principal
@@ -22,4 +19,6 @@ async function main(): Promise<void> {
     }
 }
 
-main();
+// Ejecucion de la aplicacion
+if (module === require.main)
+    main();

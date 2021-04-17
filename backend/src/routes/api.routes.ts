@@ -5,7 +5,19 @@ import { Router } from "express";
 const router: Router = Router();
 
 //Controladores
-import { getTasks, getTask, postTask, putTask, deleteTask, searchTask, putDone } from "../controllers/tasks.controllers";
+import {
+    getTasks,
+    getTask,
+    postTask,
+    putTask,
+    deleteTask,
+    searchTask,
+    putDone
+} from "../controllers/tasks.controllers";
+
+import {
+    getUsers
+} from "../controllers/user.controllers";
 
 //Rutas de la API
 router.route('/task/:Id')
@@ -19,6 +31,15 @@ router.route('/tasks')
 
 router.get('/searchTask/:task', searchTask);
 router.put('/putDone', putDone);
+
+router.route("/users")
+    .all((req, res, next) => {
+        if(false)
+            next();
+        else
+            res.json("error!!!");
+    })
+    .get(getUsers);
 
 //Exportación del modulo
 export default router;

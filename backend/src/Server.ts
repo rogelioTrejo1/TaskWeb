@@ -1,10 +1,10 @@
-//Variables de Entorno
-require('dotenv').config();
-
 //Dependencias
 import express, { Application, json, urlencoded } from "express";
 import morgan from "morgan";
 import cors from "cors";
+
+// keys
+import keys from "./keys";
 
 //Rutas
 import routes from "./routes/routes";
@@ -32,7 +32,7 @@ class Server {
      * @param {number} port puerto del servidor en el que que trabaje
      */
     private settings(port?: number): void {
-        this.app.set('port', port || process.env.PORT || 3500);
+        this.app.set('port', port || keys.portServer);
     }
 
     /**
@@ -41,13 +41,13 @@ class Server {
     private middlewares(): void {
         this.app.use(cors());
         this.app.use(json());
-        this.app.use(urlencoded({extended: false}));
+        this.app.use(urlencoded({ extended: false }));
 
         /**
          * Si el entorno es igual a "develoment", se usara la liberia de morgan para
          * revisar todas las peticiones del cliente, de lo contrario no sera nesesario su uso.
          */
-        if (process.env.NODE_ENV === 'develoment')
+        if (keys.node_env === "d")
             this.app.use(morgan('dev'));
     }
 
@@ -67,7 +67,7 @@ class Server {
             console.log(`Server on port ${this.app.get('port')}`)
         });
     }
-    
+
 }
 
 //Exportación del modulo

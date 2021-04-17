@@ -1,10 +1,9 @@
-//Variables de entorno
-require('dotenv').config();
-
 //Dependencias
 import { Request, Response } from "express";
 import { getRepository, UpdateResult, DeleteResult } from "typeorm";
+import { StatusCodes } from "http-status-codes";
 import { Task } from "../models/Task";
+import keys from "../keys";
 
 /**
  * Envia al cliente todas las tareas que se encuantran en la base de datos
@@ -25,7 +24,7 @@ export const getTasks = async (req: Request, res: Response): Promise<void> => {
         });
 
         information = {
-            status: status = 200,
+            status: status = StatusCodes.OK,
             message: "Data successfully completed!",
             resp: true,
             body: tasks
@@ -33,10 +32,10 @@ export const getTasks = async (req: Request, res: Response): Promise<void> => {
     } catch (error) {
         //Set the error information to client
         information = {
-            status: status = 400,
-            message: "There is an error!!!",
+            status: status = StatusCodes.INTERNAL_SERVER_ERROR,
+            message: "Internal Errror",
             resp: false,
-            error: process.env.NODE_ENV === 'develoment' ? error : null
+            error: keys.node_env == 'd' ? error : null
         }
 
         //Print Error
@@ -63,14 +62,14 @@ export const getTask = async (req: Request, res: Response): Promise<void> => {
 
         if (task)
             information = {
-                status: status = 200,
+                status: status = StatusCodes.OK,
                 message: "Data successfully consulted!!!!",
                 resp: true,
                 body: task
             };
         else
             information = {
-                status: status = 404,
+                status: status = StatusCodes.NOT_FOUND,
                 message: "Taks not found!",
                 resp: false,
             };
@@ -78,17 +77,14 @@ export const getTask = async (req: Request, res: Response): Promise<void> => {
     } catch (error) {
         //Set the error information to client
         information = {
-            status: status = 400,
-            message: "There is an error!!!",
+            status: status = StatusCodes.INTERNAL_SERVER_ERROR,
+            message: "Internal Errror",
             resp: false,
-            error: process.env.NODE_ENV === 'develoment' ? error : null
+            error: keys.node_env == 'd' ? error : null
         }
 
         //Print Error
         console.log(error);
-
-        //Send the responce to client
-        res.status(status).json(information);
     }
 
     res.status(status).json(information);
@@ -111,7 +107,7 @@ export const postTask = async (req: Request, res: Response): Promise<void> => {
 
         //Set the information to client
         information = {
-            status: status = 200,
+            status: status = StatusCodes.CREATED,
             message: "Successfully created data!!!",
             resp: true,
             body: newTask
@@ -119,10 +115,10 @@ export const postTask = async (req: Request, res: Response): Promise<void> => {
     } catch (error) {
         //Set the error information to client
         information = {
-            status: status = 400,
-            message: "There is an error!!!",
+            status: status = StatusCodes.INTERNAL_SERVER_ERROR,
+            message: "Internal Errror",
             resp: false,
-            error: process.env.NODE_ENV === 'develoment' ? error : null
+            error: keys.node_env == 'd' ? error : null
         }
 
         //Print Error
@@ -149,14 +145,14 @@ export const putTask = async (req: Request, res: Response): Promise<void> => {
         if (oldTask) {
             const putTask: UpdateResult = await getRepository(Task).update(oldTask, { task, delivery_Date, description });
             information = {
-                status: status = 200,
+                status: status = StatusCodes.OK,
                 message: "Successfully updated data!!!!!",
                 resp: true,
                 body: putTask
             }
         } else {
             information = {
-                status: status = 400,
+                status: status = StatusCodes.NOT_FOUND,
                 message: "Error, no user exists",
                 resp: false
             }
@@ -165,10 +161,10 @@ export const putTask = async (req: Request, res: Response): Promise<void> => {
     } catch (error) {
         //Set the error information to client
         information = {
-            status: status = 400,
-            message: "There is an error!!!",
+            status: status = StatusCodes.INTERNAL_SERVER_ERROR,
+            message: "Internal Errror",
             resp: false,
-            error: process.env.NODE_ENV === 'develoment' ? error : null
+            error: keys.node_env == 'd' ? error : null
         }
 
         //Print Error
@@ -194,7 +190,7 @@ export const deleteTask = async (req: Request, res: Response): Promise<void> => 
         const deleteTask: DeleteResult = await getRepository(Task).delete(Id);
 
         information = {
-            status: status = 200,
+            status: status = StatusCodes.ACCEPTED,
             message: "Successfully deleted data!!!!!",
             resp: true,
             body: deleteTask
@@ -202,10 +198,10 @@ export const deleteTask = async (req: Request, res: Response): Promise<void> => 
     } catch (error) {
         //Set the error information to client
         information = {
-            status: status = 400,
-            message: "There is an error!!!",
+            status: status = StatusCodes.INTERNAL_SERVER_ERROR,
+            message: "Internal Errror",
             resp: false,
-            error: process.env.NODE_ENV === 'develoment' ? error : null
+            error: keys.node_env == 'd' ? error : null
         }
 
         //Print Error
@@ -232,7 +228,7 @@ export const searchTask = async (req: Request, res: Response): Promise<void> => 
             .query('SELECT * FROM task WHERE task LIKE ?', [`%${task}%`]);
 
         information = {
-            status: status = 200,
+            status: status = StatusCodes.OK,
             message: "Data succesfuly searched!!!",
             resp: true,
             body: searchTask
@@ -242,10 +238,10 @@ export const searchTask = async (req: Request, res: Response): Promise<void> => 
     } catch (error) {
         //Set the error information to client
         information = {
-            status: status = 400,
-            message: "There is an error!!!",
+            status: status = StatusCodes.INTERNAL_SERVER_ERROR,
+            message: "Internal Errror",
             resp: false,
-            error: process.env.NODE_ENV === 'develoment' ? error : null
+            error: keys.node_env == 'd' ? error : null
         }
 
         //Print Error
@@ -274,14 +270,14 @@ export const putDone = async (req: Request, res: Response): Promise<void> => {
             const putDone: UpdateResult = await getRepository(Task).update(task, { done });
 
             information = {
-                status: status = 200,
+                status: status = StatusCodes.ACCEPTED,
                 message: "Data succesfuly updated!!!",
                 resp: true,
                 body: putDone
             };
         } else {
             information = {
-                status: status = 400,
+                status: status = StatusCodes.NOT_FOUND,
                 message: "Task not exist!!!",
                 resp: false
             };
@@ -290,10 +286,10 @@ export const putDone = async (req: Request, res: Response): Promise<void> => {
     } catch (error) {
         //Set the error information to client
         information = {
-            status: status = 400,
-            message: "There is an error!!!",
+            status: status = StatusCodes.INTERNAL_SERVER_ERROR,
+            message: "Internal Errror",
             resp: false,
-            error: process.env.NODE_ENV === 'develoment' ? error : null
+            error: keys.node_env == 'd' ? error : null
         }
 
         //Print Error

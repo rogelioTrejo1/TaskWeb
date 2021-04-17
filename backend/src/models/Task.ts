@@ -1,9 +1,12 @@
-//DEpendencias
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+//Dependencias
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+
+// Models
+import { User } from "./User";
 
 //Creación de la entidad t exportación del mismo
-@Entity()
-export class Task implements ITask {
+@Entity('tasks')
+export class Task {
     @PrimaryGeneratedColumn({type: "int"})
     Id: number;
 
@@ -18,13 +21,7 @@ export class Task implements ITask {
 
     @Column({type: "tinyint", default: false})
     done: number;
-}
 
-//Interface de la entidad
-export interface ITask {
-    Id: number;
-    task: string;
-    description: string;
-    delivery_Date: Date;
-    done: number;
+    @ManyToOne(() => User, user => user.tasks)
+    user: User
 }
