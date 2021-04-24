@@ -7,20 +7,20 @@ import { User } from "./User";
 //Creación de la entidad t exportación del mismo
 @Entity('tasks')
 export class Task {
-    @PrimaryGeneratedColumn({type: "int"})
-    Id: number;
+    @PrimaryGeneratedColumn({ type: "int" })
+    id: number;
 
-    @Column({type: "varchar"})
+    @Column({ type: "varchar" })
     task: string;
 
-    @Column({type: "text"})
+    @Column({ type: "text" })
     description: string;
 
-    @Column({type: "datetime"})
+    @Column({ type: "datetime" })
     delivery_Date: Date;
 
-    @Column({type: "tinyint", default: false})
-    done: number;
+    @Column({ type: "tinyint", default: false })
+    done: boolean;
 
     @ManyToOne(() => User, user => user.tasks)
     user: User

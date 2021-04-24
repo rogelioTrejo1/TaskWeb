@@ -15,31 +15,29 @@ import {
     putDone
 } from "../controllers/tasks.controllers";
 
-import {
-    getUsers
-} from "../controllers/user.controllers";
+import { login, register } from "../controllers/login.controller";
+import notFound404 from "../middlewares/400notFound";
+import verifyToken from "../middlewares/token";
 
-//Rutas de la API
-router.route('/task/:Id')
-    .get(getTask)
+// Login and Register
+router.post("/register", register);
+router.post("/login", login);
+
+// Tasks routes
+router.route('/task/:id')
+    .get(verifyToken, getTask)
+    .put(verifyToken, putTask)
     .delete(deleteTask);
 
 router.route('/tasks')
-    .get(getTasks)
-    .post(postTask)
-    .put(putTask);
+    .get(verifyToken, getTasks)
+    .post(verifyToken, postTask)
 
-router.get('/searchTask/:task', searchTask);
-router.put('/putDone', putDone);
+router.get('/searchTask/:task', verifyToken, searchTask);
+router.put('/putDone/:id', putDone);
 
-router.route("/users")
-    .all((req, res, next) => {
-        if(false)
-            next();
-        else
-            res.json("error!!!");
-    })
-    .get(getUsers);
+// 404 not foud handdler
+router.all("*", notFound404);
 
 //Exportación del modulo
 export default router;

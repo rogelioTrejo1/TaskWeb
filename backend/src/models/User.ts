@@ -6,13 +6,13 @@ import { Task } from "./Task";
 
 @Entity('users')
 export class User {
-    @PrimaryColumn({ type: "char", length: "15" })
+    @PrimaryColumn({ type: "char", length: 40 })
     id: string;
 
     @Column({ type: "varchar", length: 30 })
     username: string;
 
-    @Column({ type: "varchar", length: 130 })
+    @Column({ type: "varchar", length: 100 })
     password: string;
 
     @Column({ type: "varchar", length: 50 })
@@ -21,5 +21,3 @@ export class User {
     @OneToMany(() => Task, task => task.user)
     tasks: Task[]
 }
-
-

@@ -5,6 +5,7 @@ config();
 const keys = {
     node_env: process.env.NODE_ENV || "",
     portServer: process.env.PORT || 3500,
+    secretToken: process.env.SECRET_TOKEN || "task-web",
     database: {
         username: process.env.DB_USERNAME || "root",
         passsword: process.env.DB_PASSWORD || "",
