@@ -30,15 +30,13 @@ export const login = async (req: Request, res: Response): Promise<void> => {
             const isValid = await comparePassword(user.password, password);
             if (isValid)
                 res.status(StatusCodes.OK)
-                    .header({
-                        "X-Access-Token": sign({ userId: user.id }, keys.secretToken, {
-                            expiresIn: 60 * 60 * 24
-                        })
-                    })
                     .json({
                         status: StatusCodes.CREATED,
                         message: "Satisfactorily logged user!",
-                        resp: true
+                        resp: true,
+                        body: {
+                            "token": sign({ userId: user.id }, keys.secretToken)
+                        }
                     })
             else 
                 res.status(StatusCodes.UNAUTHORIZED)
@@ -102,15 +100,13 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
             // Send responce to client!
             res.status(StatusCodes.CREATED)
-                .header({
-                    "X-Access-Token": sign({ userId: newUser.id }, keys.secretToken, {
-                        expiresIn: 60 * 60 * 24
-                    })
-                })
                 .json({
                     status: StatusCodes.CREATED,
                     message: "Satisfactorily registered user!",
-                    resp: true
+                    resp: true,
+                    body: {
+                        "token": sign({ userId: user.id }, keys.secretToken)
+                    }
                 })
 
         } else {
