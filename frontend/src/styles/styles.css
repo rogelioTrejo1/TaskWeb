@@ -1,0 +1,45 @@
+.logo-login-register {
+    position: relative;
+    border: solid 12.5px #343A40;
+    height: 200px;
+    width: 200px;
+    margin: auto auto 1rem auto;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.logo-login-register::before {
+    content: "";
+    position: absolute;
+    border: solid #343A40;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #343A40;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -60%);    
+}
+
+.logo-login-register::after {
+    content: "";
+    position: absolute;
+    border: solid #343A40;
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    background-color: #343A40;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, 25%);   
+}
+
+.center-y {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.hiden-element {
+    display: none;
+}

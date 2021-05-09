@@ -1,35 +1,26 @@
 {
-    "compilerOptions": {
-        //Target y traspilación del codigo para la tectura
-        "target": "ESNext",
-        "module": "CommonJS",
-        //Ubicación y salida de los archivos
-        "outDir": "./dist/",
-        "rootDir": "./src",
-        //Reglas para la Compilacion del lenguaje.
-        "removeComments": true,
-        "importHelpers": true,
-        "strict": true,
-        "noImplicitAny": true,
-        "strictNullChecks": true,
-        "strictFunctionTypes": true,
-        "strictBindCallApply": true,
-        "strictPropertyInitialization": true,
-        "noImplicitThis": true,
-        "alwaysStrict": true,
-        "esModuleInterop": true,
-        "sourceMap": true,
-        "lib": ["DOM", "ES6"],
-        "moduleResolution": "Node"
-    },
-    //Archivos a COMPILAR 
-    "include": [
-        "src/**/*"
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
     ],
-    //Archivos que no COMPILARA
-    "exclude": [
-        "node_modules",
-        "webpack.config.ts",
-        "dist"
-    ]
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "src"
+  ]
 }
