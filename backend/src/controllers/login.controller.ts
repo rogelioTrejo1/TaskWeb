@@ -31,7 +31,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
             if (isValid)
                 res.status(StatusCodes.OK)
                     .json({
-                        status: StatusCodes.CREATED,
+                        status: StatusCodes.OK,
                         message: "Satisfactorily logged user!",
                         resp: true,
                         body: {
